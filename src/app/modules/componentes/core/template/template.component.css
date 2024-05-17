@@ -1,3 +1,4 @@
+
 .body{
     display: flex;
     flex-direction: column;
@@ -201,7 +202,7 @@ mat-divider{
 .boton-terciario{
     color: azure; 
     display: flex; 
-    justify-content: end;
+    justify-content: start;
 }
 .boton-terciario span{
     color: aliceblue;

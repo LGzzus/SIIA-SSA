@@ -63,6 +63,10 @@ import { HomeComponent } from './modules/componentes/home/home.component';
 import { AvisoDatosPersonalesDialogComponent } from './modules/componentes/modal-dialogs/aviso-datos-personales-dialog/aviso-datos-personales-dialog.component'; 
 import { VisorArchivoModalComponent } from './modules/componentes/modal-dialogs/visor-archivo-modal/visor-archivo-modal.component';
 import { AvisosComponent } from './modules/componentes/modal-dialogs/home/avisos/avisos.component';
+import { asignarRolDocente } from './modules/componentes/asingacion-rol-docenctes/asingacion-rol-docenctes.module';
+import { ListarDocentesComponent } from './modules/componentes/listar-docentes/listar-docentes.component';
+import { ListarDocentesModule } from './modules/componentes/listar-docentes/listar-docentes.module';
+
 
 @NgModule({
   declarations: [
@@ -118,6 +122,8 @@ import { AvisosComponent } from './modules/componentes/modal-dialogs/home/avisos
     MatPaginatorModule,
     MatSliderModule,
     HammerModule,
+    asignarRolDocente,
+    ListarDocentesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
