@@ -19,7 +19,18 @@ export class DocentesService {
   getDocentesProgamaEdu(data: any) {
     const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.token });
     return this.https
-      .post<Docente[]>(AppSettings.URL_MIDDELWARE + 'buscarTutores',data,{headers : headers})
+      .post<Docente[]>(AppSettings.URL_MIDDELWARE + 'buscarTutores', data, { headers: headers })
+      .pipe(
+        catchError((error) => {
+          console.log(error);
+          return this.handleError(error);
+        })
+      )
+  };
+
+  postDocentesRolAsesor(asesorVO: any) {
+    return this.https
+      .post(AppSettings.URL_LOCAL_REQUEST + '/asesor/asignarRolAsesor', asesorVO)
       .pipe(
         catchError((error) => {
           console.log(error);
@@ -35,7 +46,9 @@ export class DocentesService {
         this._notificationService.pushError(this._translate.instant('template.notificaciones.error.solicitudErronea'));
       } else if (error.status === AppSettings.CODE_WITHOUT_AUTHORIZATION) {
         this._notificationService.pushError(this._translate.instant('template.notificaciones.error.solicitudNoAutorizada'));
-      } else {
+      } else if(error.status === 403){
+        this._notificationService.pushInfo("Ya cuenta con el rol de Asesor")
+      }else {
         this._notificationService.pushError(this._translate.instant('template.notificaciones.error.intentaloMasTarde'));
         this._notificationService.pushMsjResponse(error.error.lstMensajes);
       }

@@ -4,6 +4,7 @@ export class AppSettings {
 
     public static API_ENDPOINT = 'https://siiadsyti.uatx.mx:8743';
     public static URL_MIDDELWARE = 'http://localhost:3000/api/tutorias/'
+    public static URL_LOCAL_REQUEST = 'http://localhost:8080'
     
     public static TITLE = 'SIIA 5';
     public static SLOGAN = 'Sistema integral de información administrativa';

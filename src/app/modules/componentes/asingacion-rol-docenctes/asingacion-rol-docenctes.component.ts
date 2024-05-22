@@ -4,6 +4,7 @@ import { CombosServiceService } from '../../servicios/combos-service.service';
 import { DocentesService } from '../../servicios/docentes.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { NotificationService } from '../../servicios/core/notification.service';
 
 export interface Docente{
   id: number,
@@ -24,6 +25,7 @@ export class AsingacionRolDocenctesComponent {
   pe: any = {};
   displayColumns: string[] = ['id', 'nombre', 'asignarRol'];
   dataSource = new MatTableDataSource<Docente>(this.docentesData);
+  responseData : any;
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -35,7 +37,9 @@ export class AsingacionRolDocenctesComponent {
   constructor(
     private _periodoService : CombosServiceService,
     private _docentesService: DocentesService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _notificationService : NotificationService,
+
   ) { }
 
   ngOnInit(): void {
@@ -71,13 +75,24 @@ export class AsingacionRolDocenctesComponent {
     }
   }
 
-  asignateRoleAsesor(row: Docente){
+  asignateRoleAsesor(row: any){
+    console.log(row.strNbTutor);
+    
     const dataIds = {
-      strNbTutor: row.nombre,
+      strNBTutor: row.strNbTutor,
       intIdPrograma: this.datosExtraerDocenetes.value.idProgEducativo,
       strIdPeriodo: this.datosExtraerDocenetes.value.idPeriodo
     }
-    console.log(dataIds)
+    console.log(dataIds);
     
+    this._docentesService.postDocentesRolAsesor(dataIds).subscribe(response => {
+      this.responseData = response
+
+      if(this.responseData.statusCode === 200){
+        this._notificationService.pushSuccess(this.responseData.message)
+      }else{
+        this._notificationService.pushInfo(this.responseData.error)
+      }
+    })
   }
 }
