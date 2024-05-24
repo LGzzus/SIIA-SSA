@@ -53,10 +53,7 @@ export class AsingacionRolDocenctesComponent {
     this._periodoService.getProgramasEducativos(singleusuario).subscribe(pEducativo => {
       this.pe = pEducativo
     })
-    const dataIds = {
-      intIdPrograma: this.datosExtraerDocenetes.value.idProgEducativo,
-      strIdPeriodo: this.datosExtraerDocenetes.value.idPeriodo
-    }
+    
   }
   
   formSubmit() {

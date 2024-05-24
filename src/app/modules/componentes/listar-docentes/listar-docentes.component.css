@@ -1,0 +1,26 @@
+.titulo{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.content{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-column-gap: 20px;
+}
+.mat-form-field {
+    width: 100%;
+    padding: 10px;
+}
+.main-Content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form{
+    width: 80%;
+}
+.table-list{
+    width: 80%;
+}
