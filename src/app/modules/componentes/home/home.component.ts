@@ -10,6 +10,7 @@ import * as confetti from 'canvas-confetti';
 import { SharedService } from '../../servicios/shared.service';
 import { AvisosComponent } from '../modal-dialogs/home/avisos/avisos.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DocentesService } from '../../servicios/docentes.service';
 
 
 @Component({
@@ -35,6 +36,7 @@ imagen: string="assets/imagenes/cumpleaniosSIIA.png"
     private observer : BreakpointObserver,
     private servicioNavBar: ServicioNavBarService,
     public _loginUsuarioService: LoginUsuarioService,
+    public _docenteService : DocentesService,
     private templateComponente: TemplateComponent,
     private sharedService: SharedService, public dialog: MatDialog, public router: Router) { 
       this.observer.observe(['(max-width: 800px)']).subscribe(result => {
@@ -75,7 +77,7 @@ imagen: string="assets/imagenes/cumpleaniosSIIA.png"
         this.lstMensajesValidacion = mensajes
         origen="Tareas pendientes del login...."
       }            
-    })     
+    })
   }
 
   showAvisos(avisos: any) {

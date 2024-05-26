@@ -41,7 +41,7 @@ export class DocentesService {
       )
   };
 
-  postBuscarDocentes(AsesorVO: any):Observable<Asesor[]> {
+  postBuscarDocentes(AsesorVO: any): Observable<Asesor[]> {
     return this.https
       .post<{ message: string, status: number, listaDocentes: Asesor[] }>(AppSettings.URL_LOCAL_REQUEST + '/asesor/obtenerAsesores', AsesorVO)
       .pipe(
@@ -53,6 +53,16 @@ export class DocentesService {
       );
   }
 
+  postTieneRolAsesor(AsesorVO: any) {
+    return this.https
+      .post(AppSettings.URL_LOCAL_REQUEST + '/asesor/tieneRolAsesor',AsesorVO)
+      .pipe(
+        catchError((error) => {
+          console.log(error);
+          return this.handleError(error);
+        })
+      );
+  }
   protected handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       this._notificationService.pushError(this._translate.instant('template.notificaciones.error.comunicacion'));

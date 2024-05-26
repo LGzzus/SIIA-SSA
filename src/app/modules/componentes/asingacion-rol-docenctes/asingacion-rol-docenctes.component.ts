@@ -53,7 +53,17 @@ export class AsingacionRolDocenctesComponent {
     this._periodoService.getProgramasEducativos(singleusuario).subscribe(pEducativo => {
       this.pe = pEducativo
     })
-    
+    let asesorVO = {
+      strNBTutor: sessionStorage.getItem('strNombreCompleto')
+    }
+    this._docentesService.postTieneRolAsesor(asesorVO).subscribe( bol => {
+      console.log(bol)
+      if(bol){
+        let listPriv = sessionStorage.getItem('listPrivilegios');
+        listPriv = listPriv + ",Asesor";
+        sessionStorage.setItem('listPrivilegios',listPriv)
+      }
+    })
   }
   
   formSubmit() {

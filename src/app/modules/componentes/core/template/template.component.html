@@ -61,8 +61,9 @@
         <button mat-button class="navButton" [style]="" [routerLink]="['/inicio']"
             (click)="bindSelected(0,0)">Inicio</button>
     </ng-container>
+    <!-- menu Resp tutorias -->
     <ng-container
-        *ngIf="!esDispositivoMovil && _loginUsuarioService.obtenerToken() && tienePrivilegio('RealizarTutoria')">
+        *ngIf="!esDispositivoMovil && _loginUsuarioService.obtenerToken() && tienePrivilegio('adminTutores')">
         <button mat-button [matMenuTriggerFor]="serviciosUniversitarios" class="navButton"
             [class]="posSelectButton ==1? 'navButtonhover':'navButton'">
             Responsable Tutorias
@@ -70,10 +71,23 @@
 
         <mat-menu #serviciosUniversitarios="matMenu">
             <button [class]="posSelectButton ==1 && selectedSubButton == 1? 'bindButton':''" mat-menu-item
-                [routerLink]="['asignarRolDocente']" *ngIf="tienePrivilegio('RealizarTutoria')">Asgnar Rol
+                [routerLink]="['asignarRolDocente']" *ngIf="tienePrivilegio('adminTutores')">Asgnar Rol
                 Docente</button>
             <button [class]="posSelectButton ==1 && selectedSubButton == 2? 'bindButton':''" mat-menu-item
-                [routerLink]="['listaAsesores']" *ngIf="tienePrivilegio('RealizarTutoria')">Listar Asesores</button>
+                [routerLink]="['listaAsesores']" *ngIf="tienePrivilegio('adminTutores')">Listar Asesores</button>
+        </mat-menu>
+    </ng-container>
+    <!-- Menu Rol Asesor -->
+    <ng-container
+        *ngIf="!esDispositivoMovil && _loginUsuarioService.obtenerToken() && tienePrivilegio('Asesor')">
+        <button mat-button [matMenuTriggerFor]="serviciosUniversitarios" class="navButton"
+            [class]="posSelectButton ==1? 'navButtonhover':'navButton'">
+            Asesor
+        </button>
+
+        <mat-menu #serviciosUniversitarios="matMenu">
+            <button [class]="posSelectButton ==1 && selectedSubButton == 1? 'bindButton':''" mat-menu-item
+                [routerLink]="['asignarRolDocente']" *ngIf="tienePrivilegio('Asesor')">Horarios de atencion</button>
         </mat-menu>
     </ng-container>
 
