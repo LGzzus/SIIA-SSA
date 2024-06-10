@@ -1,0 +1,44 @@
+.btn-add{
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.div-Horario{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-column-gap: 30px;
+    padding-top: 20px;
+}
+.horario{
+    width: auto;
+    border-color: black;
+    border-radius: 10px
+}
+.content{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-column-gap: 20px;
+}
+.card-footer{
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+@media(max-width: 1500px){
+    .div-Horario{
+        grid-template-columns: repeat(4,1fr);;
+    }
+}
+@media(max-width: 1200px){
+    .div-Horario{
+        grid-template-columns: repeat(3,1fr);;
+    }
+}
+@media(max-width: 884px){
+    .div-Horario{
+        grid-template-columns: 1fr;
+    }
+}

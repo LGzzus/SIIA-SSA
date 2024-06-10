@@ -71,7 +71,7 @@
 
         <mat-menu #serviciosUniversitarios="matMenu">
             <button [class]="posSelectButton ==1 && selectedSubButton == 1? 'bindButton':''" mat-menu-item
-                [routerLink]="['asignarRolDocente']" *ngIf="tienePrivilegio('adminTutores')">Asgnar Rol
+                [routerLink]="['asignarRolDocente']" *ngIf="tienePrivilegio('adminTutores')">Asignar Rol
                 Docente</button>
             <button [class]="posSelectButton ==1 && selectedSubButton == 2? 'bindButton':''" mat-menu-item
                 [routerLink]="['listaAsesores']" *ngIf="tienePrivilegio('adminTutores')">Listar Asesores</button>
@@ -87,7 +87,7 @@
 
         <mat-menu #serviciosUniversitarios="matMenu">
             <button [class]="posSelectButton ==1 && selectedSubButton == 1? 'bindButton':''" mat-menu-item
-                [routerLink]="['asignarRolDocente']" *ngIf="tienePrivilegio('Asesor')">Horarios de atencion</button>
+                [routerLink]="['registrarHorario']" *ngIf="tienePrivilegio('Asesor')">Horarios de atencion</button>
         </mat-menu>
     </ng-container>
 

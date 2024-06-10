@@ -64,8 +64,8 @@ import { AvisoDatosPersonalesDialogComponent } from './modules/componentes/modal
 import { VisorArchivoModalComponent } from './modules/componentes/modal-dialogs/visor-archivo-modal/visor-archivo-modal.component';
 import { AvisosComponent } from './modules/componentes/modal-dialogs/home/avisos/avisos.component';
 import { asignarRolDocente } from './modules/componentes/asingacion-rol-docenctes/asingacion-rol-docenctes.module';
-import { ListarDocentesComponent } from './modules/componentes/listar-docentes/listar-docentes.component';
 import { ListarDocentesModule } from './modules/componentes/listar-docentes/listar-docentes.module';
+import { RegistrarHorariosAsesorModule } from './modules/componentes/registrar-horarios-asesor/registrar-horarios-asesor.module';
 
 
 @NgModule({
@@ -80,7 +80,7 @@ import { ListarDocentesModule } from './modules/componentes/listar-docentes/list
     HomeComponent,
     AvisoDatosPersonalesDialogComponent,
     VisorArchivoModalComponent,
-    AvisosComponent,
+    AvisosComponent
   ],
   imports: [
     BrowserModule, 
@@ -124,6 +124,7 @@ import { ListarDocentesModule } from './modules/componentes/listar-docentes/list
     HammerModule,
     asignarRolDocente,
     ListarDocentesModule,
+    RegistrarHorariosAsesorModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

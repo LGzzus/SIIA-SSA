@@ -38,4 +38,8 @@
     .mat-card-actions{
         justify-content: center;
     }
+    
+    .list-main{
+        width: 100%;
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectionStrategy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { TareasPendientesService } from '../../servicios/tareas-pendientes.service';
 import { Router } from '@angular/router';
 
@@ -20,76 +20,90 @@ import { DocentesService } from '../../servicios/docentes.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
-  items: any[]= [];
-imagen: string="assets/imagenes/cumpleaniosSIIA.png"
-@ViewChild('tarjeta', {static: true}) tarjetaRef: ElementRef;
+  items: any[] = [];
+  imagen: string = "assets/imagenes/cumpleaniosSIIA.png"
+  @ViewChild('tarjeta', { static: true }) tarjetaRef: ElementRef;
   exploding = false;
-  showMessages:boolean=false
+  showMessages: boolean = false
   panelOpenState = false;
-  lstMensajesValidacion:any[]=[]
+  lstMensajesValidacion: any[] = []
   esDispositivoMovil: boolean;
   listaPrivilegios: any;
   cumpleAnios: boolean;
   permiteAyuda: boolean;
   avisos: any;
+  dataAsesor: any;
   constructor(private tareasPendientesService: TareasPendientesService,
-    private observer : BreakpointObserver,
+    private observer: BreakpointObserver,
     private servicioNavBar: ServicioNavBarService,
     public _loginUsuarioService: LoginUsuarioService,
-    public _docenteService : DocentesService,
+    public _docenteService: DocentesService,
     private templateComponente: TemplateComponent,
-    private sharedService: SharedService, public dialog: MatDialog, public router: Router) { 
-      this.observer.observe(['(max-width: 800px)']).subscribe(result => {
-        this.esDispositivoMovil = result.matches;
-      });
-    }
+    private sharedService: SharedService, public dialog: MatDialog, public router: Router) {
+    this.observer.observe(['(max-width: 800px)']).subscribe(result => {
+      this.esDispositivoMovil = result.matches;
+    });
+  }
 
   ngOnInit(): void {
-    this.avisos = this.sharedService.getSharedAvisosData()!=undefined?
-      this.sharedService.getSharedAvisosData():{lstAvisosSiia:[]};    
+    this.avisos = this.sharedService.getSharedAvisosData() != undefined ?
+      this.sharedService.getSharedAvisosData() : { lstAvisosSiia: [] };
     this.showAvisos(this.avisos)
-    var infoCarousel = sessionStorage.getItem("infoCarousel")!=null?
-                        sessionStorage.getItem("infoCarousel") : null; 
+    var infoCarousel = sessionStorage.getItem("infoCarousel") != null ?
+      sessionStorage.getItem("infoCarousel") : null;
 
-    if(infoCarousel!=null){//si recarga
-      var datosCarousel = JSON.parse(infoCarousel) 
-      this.setearInfoCarousel(datosCarousel)         
+    if (infoCarousel != null) {//si recarga
+      var datosCarousel = JSON.parse(infoCarousel)
+      this.setearInfoCarousel(datosCarousel)
     }
-    else{
+    else {
       this.servicioNavBar.triggerCarousel.subscribe(datosCarousel => {//si inicia sesion
-        this.setearInfoCarousel(datosCarousel)   
+        this.setearInfoCarousel(datosCarousel)
       })
-      
-    } 
+
+    }
     this.tareasPendientesService.tareasPendientes.subscribe(mensajes => {
       let origen = ""
-      if(mensajes?.length<1 || mensajes==null|| mensajes==undefined){
-        this.showMessages=false
+      if (mensajes?.length < 1 || mensajes == null || mensajes == undefined) {
+        this.showMessages = false
 
         let messages = sessionStorage.getItem('listTareasPendientes')!
-        this.lstMensajesValidacion=JSON.parse(messages)
-        if(this.lstMensajesValidacion.length>0){
-          this.showMessages=true
-          origen ="Tareas pendientes del sesionStorage...."
+        this.lstMensajesValidacion = JSON.parse(messages)
+        if (this.lstMensajesValidacion.length > 0) {
+          this.showMessages = true
+          origen = "Tareas pendientes del sesionStorage...."
         }
-      }else{
-        this.showMessages=true
+      } else {
+        this.showMessages = true
         this.lstMensajesValidacion = mensajes
-        origen="Tareas pendientes del login...."
-      }            
+        origen = "Tareas pendientes del login...."
+      }
+    })
+    let asesorVO = {
+      strNBTutor: sessionStorage.getItem("strNombreCompleto")
+    }
+    this._docenteService.postTieneRolAsesor(asesorVO).subscribe(response => {
+      console.log(response);
+      this.dataAsesor = response;
+      if (this.dataAsesor.mensaje == "Es asesor") {
+        let listPriv = sessionStorage.getItem("listPrivilegios") + ",Asesor"
+
+        sessionStorage.setItem("listPrivilegios", listPriv);
+        sessionStorage.setItem("id_Asesor", this.dataAsesor.dataAsesor.idAsesor);
+      }
     })
   }
 
   showAvisos(avisos: any) {
-    if(avisos.lstAvisosSiia.length>0){
+    if (avisos.lstAvisosSiia.length > 0) {
       this.consultarAviso(avisos.lstAvisosSiia)
-    }else{
+    } else {
       console.log("No hay avisos del shared service...")
     }
   }
 
-  consultarAviso(lstAvisosSiia:any[]){    
-    if(this.esDispositivoMovil){
+  consultarAviso(lstAvisosSiia: any[]) {
+    if (this.esDispositivoMovil) {
       //console.log("es dispositivo movil")
       const dialogConfig = {
         width: '100%', // Ancho del diálogo
@@ -98,86 +112,86 @@ imagen: string="assets/imagenes/cumpleaniosSIIA.png"
         maxHeight: '100%', // Altura máxima del diálogo
         panelClass: 'full-screen-dialog', // Clase de CSS para el diálogo de pantalla completa
         autoFocus: false, // Desactivar el enfoque automático en el primer elemento
-        position:{
+        position: {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)'
         },
         // Resto de opciones para el MatDialog
-        data:{
-          titulo:"Avisos",
+        data: {
+          titulo: "Avisos",
           lstAvisosSiia: lstAvisosSiia
         }
       };
-  
+
       const dialogRef = this.dialog.open(AvisosComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(result => {
-        if(result!=undefined){
-          if(result.data==true){
-            
-          }else{
-            
+        if (result != undefined) {
+          if (result.data == true) {
+
+          } else {
+
           }
         }
-      });  
+      });
 
-    }else{    
+    } else {
       const dialogRef = this.dialog.open(AvisosComponent, {
         data: {
-          titulo:"Avisos",
-          lstAvisosSiia: lstAvisosSiia   
-        },   
-        height: '100%',        
-        width: '70%'         
+          titulo: "Avisos",
+          lstAvisosSiia: lstAvisosSiia
+        },
+        height: '100%',
+        width: '70%'
       });
       dialogRef.afterClosed().subscribe(result => {
-        if(result!=undefined){
-          if(result.data==true){
-            
-          }else{
-            
+        if (result != undefined) {
+          if (result.data == true) {
+
+          } else {
+
           }
         }
       });
-    } 
+    }
   }
 
-  setearInfoCarousel(info:any) {
-    var privilegios = this._loginUsuarioService.obtenerPrivilegios()      
+  setearInfoCarousel(info: any) {
+    var privilegios = this._loginUsuarioService.obtenerPrivilegios()
     this.listaPrivilegios = JSON.parse(JSON.stringify(privilegios))
 
     this.cumpleAnios = this.templateComponente.tienePrivilegio("cumpleanios")//info.blnEsCumpleanios?true:false;    
     this.permiteAyuda = this.templateComponente.tienePrivilegio("SolicitarServicio")
-    if(info.blnUsuarioMsExistente){
+    if (info.blnUsuarioMsExistente) {
       this.items.push(
         {
           show: info.blnUsuarioMsExistente,
-          img:'https://uatx.mx/siia/avisoCuentaCorreo.jpg',
+          img: 'https://uatx.mx/siia/avisoCuentaCorreo.jpg',
           proveedorUrl: 'https://login.microsoftonline.com/ ',
           correo: info.strCorreoInstitucional,
-          imgAyuda:'https://siiadsyti.uatx.mx:8743/SIIA/resources/imagenes/aviso_mesa_ayuda.png',
+          imgAyuda: 'https://siiadsyti.uatx.mx:8743/SIIA/resources/imagenes/aviso_mesa_ayuda.png',
           //showAyuda: permiteAyuda,
         }
       )
     }
-    if(info.blnUsuarioGmExistente){
+    if (info.blnUsuarioGmExistente) {
       this.items.push(
         {
           show: info.blnUsuarioGmExistente,
           img: 'https://uatx.mx/siia/avisoCuentaCorreoGmail.jpg',
           proveedorUrl: 'https://www.google.com/gmail/',
-          correo: info.strCorreoInstitucionalGm,  
-          imgAyuda:'https://siiadsyti.uatx.mx:8743/SIIA/resources/imagenes/aviso_mesa_ayuda.png',
+          correo: info.strCorreoInstitucionalGm,
+          imgAyuda: 'https://siiadsyti.uatx.mx:8743/SIIA/resources/imagenes/aviso_mesa_ayuda.png',
         }
       )
     }
   }
-  onMouseEnter(){
+  onMouseEnter() {
     let element = document.getElementById('tarjeta');
-    if(this.cumpleAnios){      
+    if (this.cumpleAnios) {
       if (element) {
         element.classList.add('mostrado');
-      }else{
+      } else {
         console.log("No se encontro el id")
       }
       this.lanzarConfetti()
@@ -189,28 +203,28 @@ imagen: string="assets/imagenes/cumpleaniosSIIA.png"
     temporalDivElement.innerHTML = html;
     return temporalDivElement.textContent || temporalDivElement.innerText || '';
   }
-  
+
   openNewTab(url: string) {
     localStorage.clear();
-    sessionStorage.clear();      
+    sessionStorage.clear();
     //this.sidenav.close();  
     this.router.navigateByUrl('/login').then(() => {
-      window.location.reload()     
-    })  
+      window.location.reload()
+    })
     window.open(url, '_blank');
   }
-  mesaDeAyuda(){
-    this.router.navigate(['#'],{})
+  mesaDeAyuda() {
+    this.router.navigate(['#'], {})
   }
-  lanzarConfetti(){
+  lanzarConfetti() {
     const canvasElement = document.getElementById('canvas');
     if (canvasElement instanceof HTMLCanvasElement) {
-        confetti.create(canvasElement, {
-            resize: true,
-            useWorker: true
-        })({ particleCount: 500, spread: 160 });
+      confetti.create(canvasElement, {
+        resize: true,
+        useWorker: true
+      })({ particleCount: 500, spread: 160 });
     } else {
-        console.error('El elemento de lienzo no se encontró o no es un elemento de lienzo HTML.');
+      console.error('El elemento de lienzo no se encontró o no es un elemento de lienzo HTML.');
     }
   }
 }
