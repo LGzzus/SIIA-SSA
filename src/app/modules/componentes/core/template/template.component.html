@@ -62,8 +62,7 @@
             (click)="bindSelected(0,0)">Inicio</button>
     </ng-container>
     <!-- menu Resp tutorias -->
-    <ng-container
-        *ngIf="!esDispositivoMovil && _loginUsuarioService.obtenerToken() && tienePrivilegio('adminTutores')">
+    <ng-container *ngIf="!esDispositivoMovil && _loginUsuarioService.obtenerToken() && tienePrivilegio('adminTutores')">
         <button mat-button [matMenuTriggerFor]="serviciosUniversitarios" class="navButton"
             [class]="posSelectButton ==1? 'navButtonhover':'navButton'">
             Responsable Tutorias
@@ -75,19 +74,34 @@
                 Docente</button>
             <button [class]="posSelectButton ==1 && selectedSubButton == 2? 'bindButton':''" mat-menu-item
                 [routerLink]="['listaAsesores']" *ngIf="tienePrivilegio('adminTutores')">Listar Asesores</button>
+            <button [class]="posSelectButton ==1 && selectedSubButton == 3? 'bindButton':''" mat-menu-item
+                [routerLink]="['asignarAsesoria']" *ngIf="tienePrivilegio('adminTutores')">Asignar Asesoria</button>
         </mat-menu>
     </ng-container>
     <!-- Menu Rol Asesor -->
-    <ng-container
-        *ngIf="!esDispositivoMovil && _loginUsuarioService.obtenerToken() && tienePrivilegio('Asesor')">
+    <ng-container *ngIf="!esDispositivoMovil && _loginUsuarioService.obtenerToken() && tienePrivilegio('Asesor')">
         <button mat-button [matMenuTriggerFor]="serviciosUniversitarios" class="navButton"
             [class]="posSelectButton ==1? 'navButtonhover':'navButton'">
             Asesor
         </button>
-
         <mat-menu #serviciosUniversitarios="matMenu">
             <button [class]="posSelectButton ==1 && selectedSubButton == 1? 'bindButton':''" mat-menu-item
+                [routerLink]="['registrarHorario']" *ngIf="">Firmar Solicitud</button>
+            <button [class]="posSelectButton ==1 && selectedSubButton == 2? 'bindButton':''" mat-menu-item
                 [routerLink]="['registrarHorario']" *ngIf="tienePrivilegio('Asesor')">Horarios de atencion</button>
+        </mat-menu>
+    </ng-container>
+    <ng-container
+        *ngIf="!esDispositivoMovil && _loginUsuarioService.obtenerToken() && tienePrivilegio('ServiciosEstudiantiles')">
+        <button mat-button [matMenuTriggerFor]="serviciosEstudiantiles" class="navButton"
+            [class]="posSelectButton ==1? 'navButtonhover':'navButton'">
+            Servicios Estudiantiles
+        </button>
+
+        <mat-menu #serviciosEstudiantiles="matMenu">
+            <button [class]="posSelectButton == 1 && selectedSubButton == 1? 'bindButton': ''" mat-menu-item
+                [routerLink]="['solicitarAsesoria']" *ngIf="tienePrivilegio('ServiciosEstudiantiles')">Solicitar
+                Asesoria</button>
         </mat-menu>
     </ng-container>
 
@@ -140,9 +154,11 @@
             <button [class]="posSelectButton ==2 && selectedSubButton==1?'bindButton':''" mat-menu-item
                 [routerLink]="['#']" (click)="bindSelected(2,1)" *ngIf="tienePrivilegio('SolicitarServicio')">Solicitar
                 ticket de ayuda</button>
+            <button [class]="posSelectButton ==2 && selectedSubButton==2?'bindButton':''" mat-menu-item
+                [routerLink]="['firmarSolicitud']" (click)="bindSelected(2,2)" *ngIf="tieneSolicitud()">Firmar
+                Solicitud</button>
         </mat-menu>
     </ng-container>
-
 
 </mat-toolbar>
 

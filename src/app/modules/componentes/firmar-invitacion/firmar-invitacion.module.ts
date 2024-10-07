@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-//components
-import { ListarDocentesComponent } from './listar-docentes.component';
-
-//angular material
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -15,12 +11,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
-import { AppRoutingModule } from 'src/app/app-routing.module';
+import { FirmarInvitacionComponent } from './firmar-invitacion.component';
 
 
 @NgModule({
   declarations: [
-    ListarDocentesComponent
+    FirmarInvitacionComponent
   ],
   imports: [
     CommonModule,
@@ -33,8 +29,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
     ReactiveFormsModule,
     MatTableModule,
     MatCheckboxModule,
-    MatIconModule,
-    AppRoutingModule
+    MatIconModule
   ]
 })
-export class ListarDocentesModule { }
+export class FirmarInvitacionModule { }

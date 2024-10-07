@@ -11,6 +11,9 @@ import { SharedService } from '../../servicios/shared.service';
 import { AvisosComponent } from '../modal-dialogs/home/avisos/avisos.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DocentesService } from '../../servicios/docentes.service';
+import { SolicitudesServicesService } from '../../servicios/solicitudes-services.service';
+import { NotificationService } from '../../servicios/core/notification.service';
+import { SharedServicesService } from '../../servicios/shared-services.service';
 
 
 @Component({
@@ -33,13 +36,18 @@ export class HomeComponent implements OnInit {
   permiteAyuda: boolean;
   avisos: any;
   dataAsesor: any;
+  idSolicitud: any;
   constructor(private tareasPendientesService: TareasPendientesService,
     private observer: BreakpointObserver,
     private servicioNavBar: ServicioNavBarService,
     public _loginUsuarioService: LoginUsuarioService,
     public _docenteService: DocentesService,
+    private _solicitudesServices: SolicitudesServicesService,
     private templateComponente: TemplateComponent,
-    private sharedService: SharedService, public dialog: MatDialog, public router: Router) {
+    protected _notificationService: NotificationService,
+    private sharedService: SharedService,
+    private sharedService2: SharedServicesService,
+    public dialog: MatDialog, public router: Router) {
     this.observer.observe(['(max-width: 800px)']).subscribe(result => {
       this.esDispositivoMovil = result.matches;
     });
@@ -80,18 +88,33 @@ export class HomeComponent implements OnInit {
       }
     })
     let asesorVO = {
-      strNBTutor: sessionStorage.getItem("strNombreCompleto")
+      strNBTutor: sessionStorage.getItem("strNombreCompleto"),
+      //idAsesor: sessionStorage.getItem("id_Asesor")
+      lngIdPersona: sessionStorage.getItem("lngIdPersona")
     }
     this._docenteService.postTieneRolAsesor(asesorVO).subscribe(response => {
-      console.log(response);
       this.dataAsesor = response;
-      if (this.dataAsesor.mensaje == "Es asesor") {
-        let listPriv = sessionStorage.getItem("listPrivilegios") + ",Asesor"
-
-        sessionStorage.setItem("listPrivilegios", listPriv);
-        sessionStorage.setItem("id_Asesor", this.dataAsesor.dataAsesor.idAsesor);
+      if(this.dataAsesor.dataAsesor.intStatus ==  true){
+        if (this.dataAsesor.mensaje == "Es asesor") {
+          let listPriv = sessionStorage.getItem("listPrivilegios") + ",Asesor"
+          this.sharedService2.asignarEsTutor(this.dataAsesor.dataAsesor.intStatus);
+          sessionStorage.setItem("listPrivilegios", listPriv);
+          sessionStorage.setItem("id_Asesor", this.dataAsesor.dataAsesor.idAsesor);
+        } 
+      }else{
+        this.sharedService2.asignarEsTutor(this.dataAsesor.dataAsesor.intStatus);
+        this._notificationService.pushInfo("Es necesario que firmes la solicitud para confirmar tu rol de asesor");
+        this.showAvisos(this.dataAsesor.dataAsesor.intStatus)
       }
     })
+    /*this._solicitudesServices.postSolicitudesPendientes(asesorVO.lngIdPersona).subscribe(response => {
+      this.idSolicitud = response;
+      if (this.dataAsesor.mensaje !== undefined) {
+        console.log(this.idSolicitud.solicitudId)
+        sessionStorage.setItem("idSolicitud",this.idSolicitud.solicitudId)
+        //this.showMessages = true;
+      }
+    })*/
   }
 
   showAvisos(avisos: any) {

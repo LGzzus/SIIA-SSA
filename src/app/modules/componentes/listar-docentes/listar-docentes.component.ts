@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DocentesService } from '../../servicios/docentes.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 export interface Asesor {
   idAsesor: number,
@@ -37,7 +38,8 @@ export class ListarDocentesComponent {
   constructor(
     private _combosServices: CombosServiceService,
     private _formBuilder: FormBuilder,
-    private _docentesService : DocentesService
+    private _docentesService : DocentesService,
+    private router: Router
   ) { }
 
   
@@ -64,6 +66,7 @@ export class ListarDocentesComponent {
       strIdPeriodo: this.dataFormulario.value.idPeriodo,
       strNBTutor: this.dataFormulario.value.strNombre
     }
+    console.log(dataForm);
     if (this.dataFormulario.valid){
       this._docentesService.postBuscarDocentes(dataForm).subscribe((asesores) => {
         this.asesoresData = asesores;

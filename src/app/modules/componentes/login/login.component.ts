@@ -77,7 +77,8 @@ export class LoginComponent implements OnInit {
 
       this._loginUsuarioService.UsuarioLogueo(usuario).subscribe((data: any) => {
         this.logueoData = data;          
-
+        console.log(this.logueoData);
+        
         if(this.logueoData.blnValido == true){       
             sessionStorage.clear();
             localStorage.clear();       
@@ -90,6 +91,7 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem("strLoginUsuarioLog",this.objeto.strLoginUsuarioLog);
             sessionStorage.setItem("lngIdPersona",this.objeto.lngIdPersona);
             sessionStorage.setItem("token",this.objeto.token);
+            sessionStorage.setItem("idHistorialLaboral",this.objeto.idHistorialLaboral);
             sessionStorage.setItem("listPrivilegios",this.objeto.listPrivilegios);
             sessionStorage.setItem("idHistorialAcademico",this.objeto.idHistorialAcademico)
 

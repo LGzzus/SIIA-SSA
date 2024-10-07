@@ -3,47 +3,22 @@ import { Injectable } from '@angular/core';
 import { NotificationService } from './core/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppSettings } from 'src/app/settings.const';
-import { catchError, map, throwError } from 'rxjs';
-import { Tutorados } from '../componentes/asignar-asesoria/asignar-asesoria.component';
+import { Observable, catchError, map, throwError } from 'rxjs';
+import { Docente } from '../componentes/asingacion-rol-docenctes/asingacion-rol-docenctes.component';
+import { Asesor } from '../componentes/listar-docentes/listar-docentes.component';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class CombosServiceService {
-
-  token = sessionStorage.getItem("token");
+export class SolicitudesServicesService {
 
   constructor(private https: HttpClient, protected _notificationService: NotificationService,
     private _translate: TranslateService) { }
 
-  getPeriodos = () => {
-    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.token });
+  postSolicitudesPendientes(asesorVO: any){
     return this.https
-      .get(AppSettings.URL_MIDDELWARE + 'obtPeriodos', { headers: headers })
-      .pipe(
-        catchError((error) => {
-          console.log(error);
-          return this.handleError(error);
-        })
-      )
-  };
-
-  getProgramasEducativos(usuario:any){
-    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.token });
-    return this.https
-      .post(AppSettings.URL_MIDDELWARE + 'obtProgramas',usuario,  { headers: headers })
-      .pipe(
-        catchError((error) => {
-          console.log(error);
-          return this.handleError(error);
-        })
-      )
-  };
-
-  postObtenerTutorados(data: any){
-    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.token });
-    return this.https
-      .post<Tutorados[]>(AppSettings.URL_MIDDELWARE+'verTutorados',data,{headers: headers})
+      .post(AppSettings.URL_LOCAL_REQUEST + '/solicitud/solicitudesPendientes?lngIdPersona='+asesorVO,{})
       .pipe(
         catchError((error) => {
           console.log(error);
@@ -51,16 +26,18 @@ export class CombosServiceService {
         })
       )
   }
-  /*UsuarioLogueo(usuario:any): Observable<any> {
-    return this._http.post(
-      AppSettings.API_ENDPOINT + '/siia-back-comun-0.0.1-SNAPSHOT/public/serviciosUniversitarios/authenticate',usuario
-    ).pipe(
-      catchError(error => {
-        console.log(error);
-        return this.handleError(error);
-      })
-    );
-  }*/
+  postAceptarSolicitud(solicitudVO: any){
+    return this.https
+      .post(AppSettings.URL_LOCAL_REQUEST + '/solicitud/firmarSolicitud?idSolicitud='+solicitudVO.idSolicitud,{},
+        {responseType: 'blob'})
+      .pipe(
+        catchError((error) => {
+          console.log(error);
+          return this.handleError(error);
+        })
+      )
+  }
+
   protected handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       this._notificationService.pushError(this._translate.instant('template.notificaciones.error.comunicacion'));
@@ -69,6 +46,8 @@ export class CombosServiceService {
         this._notificationService.pushError(this._translate.instant('template.notificaciones.error.solicitudErronea'));
       } else if (error.status === AppSettings.CODE_WITHOUT_AUTHORIZATION) {
         this._notificationService.pushError(this._translate.instant('template.notificaciones.error.solicitudNoAutorizada'));
+      } else if (error.status === 409) {
+        this._notificationService.pushInfo("Ya cuenta con el rol de Asesor")
       } else {
         this._notificationService.pushError(this._translate.instant('template.notificaciones.error.intentaloMasTarde'));
         this._notificationService.pushMsjResponse(error.error.lstMensajes);

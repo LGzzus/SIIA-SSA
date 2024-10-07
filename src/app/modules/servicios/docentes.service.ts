@@ -32,7 +32,7 @@ export class DocentesService {
 
   postDocentesRolAsesor(asesorVO: any) {
     return this.https
-      .post(AppSettings.URL_LOCAL_REQUEST + '/asesor/asignarRolAsesor', asesorVO)
+      .post(AppSettings.URL_LOCAL_REQUEST + '/asesor/asingarRolAsesor', asesorVO)
       .pipe(
         catchError((error) => {
           console.log(error);
@@ -43,9 +43,9 @@ export class DocentesService {
 
   postBuscarDocentes(AsesorVO: any): Observable<Asesor[]> {
     return this.https
-      .post<{ message: string, status: number, listaDocentes: Asesor[] }>(AppSettings.URL_LOCAL_REQUEST + '/asesor/obtenerAsesores', AsesorVO)
+      .post<{ message: string, status: number, lista_Asesores: Asesor[] }>(AppSettings.URL_LOCAL_REQUEST + '/asesor/obtenerAsesor-es', AsesorVO)
       .pipe(
-        map(response => response.listaDocentes),
+        map(response => response.lista_Asesores),
         catchError((error) => {
           console.log(error);
           return this.handleError(error);
@@ -55,7 +55,7 @@ export class DocentesService {
 
   postTieneRolAsesor(AsesorVO: any) {
     return this.https
-      .post(AppSettings.URL_LOCAL_REQUEST + '/asesor/tieneRolAsesor',AsesorVO)
+      .post(AppSettings.URL_LOCAL_REQUEST + '/asesor/soyAsesor',AsesorVO)
       .pipe(
         catchError((error) => {
           console.log(error);
@@ -71,7 +71,7 @@ export class DocentesService {
         this._notificationService.pushError(this._translate.instant('template.notificaciones.error.solicitudErronea'));
       } else if (error.status === AppSettings.CODE_WITHOUT_AUTHORIZATION) {
         this._notificationService.pushError(this._translate.instant('template.notificaciones.error.solicitudNoAutorizada'));
-      } else if (error.status === 403) {
+      } else if (error.status === 409) {
         this._notificationService.pushInfo("Ya cuenta con el rol de Asesor")
       } else {
         this._notificationService.pushError(this._translate.instant('template.notificaciones.error.intentaloMasTarde'));

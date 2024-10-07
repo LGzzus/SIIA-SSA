@@ -8,12 +8,14 @@ import { ServicioNavBarService } from 'src/app/modules/servicios/servicio-nav-ba
 
 //traductor
 import { TranslateService } from '@ngx-translate/core';
+import { SharedService } from 'src/app/modules/servicios/shared.service';
+import { SharedServicesService } from 'src/app/modules/servicios/shared-services.service';
 
 @Component({
   selector: 'app-template',
   templateUrl: './template.component.html',
   styleUrls: ['./template.component.css'],
-  styles:[`
+  styles: [`
     ::ng-deep .arrowColor > .mat-expansion-indicator:after {
       color: white;
     }
@@ -29,75 +31,95 @@ import { TranslateService } from '@ngx-translate/core';
     ::ng-deep .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
       flex-grow: 0 !important;
     }  
-  `] 
+  `]
 })
-export class TemplateComponent implements OnInit  {
+export class TemplateComponent implements OnInit {
+  esAsesor: any;
   panelOpenState1 = false;
   panelOpenState2 = false;
-  selectedSubButton:number
-  posSelectButton:number
+  selectedSubButton: number
+  posSelectButton: number
 
   @ViewChild(MatSidenav)
-  sidenav! : MatSidenav;
+  sidenav!: MatSidenav;
 
-  esDispositivoMovil:boolean=false;
+  esDispositivoMovil: boolean = false;
 
   public activeLang = 'es';
   selected = new FormControl('es');
-  listaPrivilegios:any;
+  listaPrivilegios: any;
   //adminCongresos: boolean = false;
   constructor(public _loginUsuarioService: LoginUsuarioService,
-              private translate: TranslateService,
-              private observer : BreakpointObserver,
-              public router: Router,
-              private servicioNavBar: ServicioNavBarService) { }              
-  
-  ngOnInit(): void {
-    this.translate.setDefaultLang(this.activeLang);   
+    private translate: TranslateService,
+    private observer: BreakpointObserver,
+    public router: Router,
+    public sharedServices: SharedServicesService,
+    private servicioNavBar: ServicioNavBarService) { }
 
-    if(this._loginUsuarioService.obtenerPrivilegios()){//si recarga pagina
+  ngOnInit(): void {
+    this.translate.setDefaultLang(this.activeLang);
+
+    if (this._loginUsuarioService.obtenerPrivilegios()) {//si recarga pagina
       var privilegios = this._loginUsuarioService.obtenerPrivilegios()
       console.log("Recibiendo privilegios del storage...")
-      this.listaPrivilegios = JSON.parse(JSON.stringify(privilegios))           
+      this.listaPrivilegios = JSON.parse(JSON.stringify(privilegios))
     }
-    else{
+    else {
       this.servicioNavBar.triggerPrivilegios.subscribe(privilegios => {//si inicia sesion
         console.log("Recibiendo privilegios del Login...")
         this.listaPrivilegios = privilegios
       })
-      
-    }    
+
+    }
     this.observer.observe(['(max-width : 800px)']).subscribe((res) => {
-      
-      if (res.matches){
+
+      if (res.matches) {
         this.esDispositivoMovil = true
       } else {
         this.esDispositivoMovil = false
       }
-    });        
-  }
+    });
 
-  
-  //observer para menu lateral
-  ngAfterViewInit(): void {    
-    this.servicioNavBar.triggerVolver.subscribe(back => {//si inicia sesion
-      if(back=="backToHome"){
-        this.selectedSubButton=0
+    this.sharedServices.currentEsAsesor.subscribe(esAsesor => {
+      if(esAsesor){
+        this.esAsesor = esAsesor;
+        console.log('Es asesor',esAsesor);
+      }else{
+        this.esAsesor = esAsesor;
+        console.log('Es asesor',esAsesor);
       }
     })
   }
 
-public tienePrivilegio(priv:string){
-  var cuentaConPrivilegio = false
-  if(priv == "TODO"){
-    cuentaConPrivilegio = true
+
+  //observer para menu lateral
+  ngAfterViewInit(): void {
+    this.servicioNavBar.triggerVolver.subscribe(back => {//si inicia sesion
+      if (back == "backToHome") {
+        this.selectedSubButton = 0
+      }
+    })
   }
-    this.listaPrivilegios.forEach((privilegio: string)=> {
-      if(privilegio == priv){
+
+  public tienePrivilegio(priv: string) {
+    var cuentaConPrivilegio = false
+    if (priv == "TODO") {
+      cuentaConPrivilegio = true
+    }
+    this.listaPrivilegios.forEach((privilegio: string) => {
+      if (privilegio == priv) {
         cuentaConPrivilegio = true
       }
     });
     return cuentaConPrivilegio
+  }
+  
+  public tieneSolicitud(){
+    if(sessionStorage.getItem("idSolicitud")){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   public changeLang(lang: any) {
@@ -105,30 +127,39 @@ public tienePrivilegio(priv:string){
     this.translate.use(lang);
   }
 
-  click_iniciarSesion(){
+  click_iniciarSesion() {
     this.sidenav.close();
-    this.router.navigateByUrl('/login')   
+    this.router.navigateByUrl('/login')
   }
 
-  CerrarSesion(){
+  CerrarSesion() {
     localStorage.clear();
     sessionStorage.clear();
-    
+
     this.sidenav.close();
 
     this.router.navigateByUrl('/login')
-          .then(() => {
-            window.location.reload()     
-          })  
-  }  
-
-  bindSelected(position:number, SubButtonPos:number){
-    this.sidenav.close();
-    this.selectedSubButton=SubButtonPos
-    this.posSelectButton=position
+      .then(() => {
+        window.location.reload()
+      })
   }
 
-  closeMenu(){
+  bindSelected(position: number, SubButtonPos: number) {
     this.sidenav.close();
+    this.selectedSubButton = SubButtonPos
+    this.posSelectButton = position
+  }
+
+  closeMenu() {
+    this.sidenav.close();
+  }
+  public asesorNoConfirmado() {
+    let esAsesor = false
+    if (this.esAsesor == true) {  
+      esAsesor = true
+    }else{
+      esAsesor = false
+    }  
+    return esAsesor
   }
 }

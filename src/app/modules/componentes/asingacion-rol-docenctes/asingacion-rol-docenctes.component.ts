@@ -74,8 +74,10 @@ export class AsingacionRolDocenctesComponent {
     console.log(dataIds)
     if (this.datosExtraerDocenetes.valid) {
       this._docentesService.getDocentesProgamaEdu(dataIds).subscribe((docentes) => {
+        console.log(docentes)
         this.docentesData = docentes
         this.dataSource.data = this.docentesData;
+        console.log(this.dataSource.data)
         this.dataSource.paginator = this.paginator;
 
       })
@@ -86,6 +88,7 @@ export class AsingacionRolDocenctesComponent {
     console.log(row.strNbTutor);
     
     const dataIds = {
+      intIdPersona: row.intIdPersona,
       strNBTutor: row.strNbTutor,
       intIdPrograma: this.datosExtraerDocenetes.value.idProgEducativo,
       strIdPeriodo: this.datosExtraerDocenetes.value.idPeriodo

@@ -1,35 +1,38 @@
+.Asesor{
+    margin: 20px 0px;
+    font-weight: bold;
+    font-size: medium;
+}
+.sections{
+    border: 1px solid black;
+}
 .titulo {
     display: flex;
     justify-content: center;
     margin-top: 10px;
 }
 
-.content {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 20px;
+.form {
+    width: 80%;
 }
-
-.mat-form-field {
-    width: 100%;
-    padding: 10px;
-}
-
 .main-Content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-
-.form {
-    width: 80%;
+.content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
 }
-
 .table-list {
     width: 80%;
 }
-
+.mat-form-field {
+    width: 100%;
+    padding: 10px;
+}
 @media (max-width: 884px) {
     .content {
         grid-template-columns: 1fr;
@@ -39,10 +42,6 @@
         width: 100%;
     }
 }
-
-  
-  @media (max-width: 768px) {
-    .hidden-xs {
-      display: none;
-    }
-  }
+.success{
+    background-color: #008f39;
+}

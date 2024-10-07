@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppSettings } from 'src/app/settings.const';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { NotificationService } from './core/notification.service';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
@@ -21,6 +21,7 @@ export class LoginUsuarioService {
     return this._http.post(
       AppSettings.API_ENDPOINT + '/siia-back-comun-0.0.1-SNAPSHOT/public/serviciosUniversitarios/authenticate',usuario
     ).pipe(
+      map(response => response), 
       catchError(error => {
         console.log(error);
         return this.handleError(error);
@@ -36,6 +37,9 @@ export class LoginUsuarioService {
     return sessionStorage.getItem("token")
   }
   
+  obtenerIdHistorialLaboral(IdHistorialLaboral:any){
+    return sessionStorage.setItem("idHistorialLaboral",IdHistorialLaboral)
+  }
   obtenerPrivilegios() { 
     var privilegios = sessionStorage.getItem("listPrivilegios") 
     let arr
