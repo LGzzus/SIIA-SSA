@@ -1,0 +1,65 @@
+<div class="titulo">
+    <h2>Lista de Asesores</h2>
+</div>
+<div class="main-Content">
+    <div class="form">
+        <mat-card>
+            <form [formGroup]="dataFormulario" (ngSubmit)="obtenerDocentesSubmit()">
+                <mat-card-content class="content">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Selecciona un programa educativo</mat-label>
+                        <mat-select formControlName="idProgEducativo">
+                            <mat-option *ngFor="let pE of pe" [value]="pE.intIdProgramaCampus">{{pE.strDsProgramaCampus}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Selecciona un periodo</mat-label>
+                        <mat-select formControlName="idPeriodo">
+                            <mat-option *ngFor="let periodo of periodos" [value]="periodo.strIdPeriodo">{{periodo.strDsPeriodoTemporada}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Buscar por nombre</mat-label>
+                        <input matInput formControlName="strNombre">
+                    </mat-form-field>
+                </mat-card-content>
+                <mat-card-actions align="end">
+                    <button mat-raised-button color="primary">Buscar</button>
+                </mat-card-actions>
+            </form>
+        </mat-card>
+    </div>
+    <div class="table-list">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="idAsesor">
+                <th mat-header-cell *matHeaderCellDef>Id Asesor</th>
+                <td mat-cell *matCellDef="let asesoresData">{{asesoresData.idAsesor}}</td>
+            </ng-container>
+            <ng-container matColumnDef="strNombre">
+                <th mat-header-cell *matHeaderCellDef>Nombre Completo</th>
+                <td mat-cell *matCellDef="let asesoresData">{{asesoresData.strNBTutor}}</td>
+            </ng-container>
+            <ng-container matColumnDef="areasApoyo">
+                <th mat-header-cell *matHeaderCellDef class="hidden-xs">Areas de Apoyo</th>
+                <td mat-cell *matCellDef="let asesoresData" class="hidden-xs">{{asesoresData.areasApoyo}}</td>
+            </ng-container>
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let asesoresData" >
+                    <button mat-raised-button color="primary" type="submit" matTooltip="Asignar tol asesor"
+                        matTooltipPosition="left" style="margin-right: 10px;" >
+                        <mat-icon>format_list_bulleted</mat-icon>
+                    </button>
+                    <button mat-raised-button color="primary" type="submit" matTooltip="Asignar tol asesor"
+                        matTooltipPosition="left" [routerLink]="['/asignarAsesoria']" [queryParams]="{nombreAsesor: asesoresData.strNBTutor}">
+                        <mat-icon>co_present</mat-icon>
+                    </button>
+                    
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+    </div>
+</div>

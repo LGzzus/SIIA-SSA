@@ -1,0 +1,7 @@
+.title{
+    margin: 15px;
+}
+.content{
+    display: grid;
+    grid-template-columns: repeat(1,1rf);
+}

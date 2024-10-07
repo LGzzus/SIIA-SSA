@@ -1,0 +1,118 @@
+<div class="container-fuid titulo"><h2>Asignar Asesoria</h2></div>
+<div class="main-Content">
+    <div class="form">
+        <mat-card>
+            <form [formGroup]="dataFormulario" (ngSubmit)="obtenerDocentesSubmit()">
+                <mat-card-content class="content">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Selecciona un programa educativo</mat-label>
+                        <mat-select formControlName="idProgEducativo">
+                            <mat-option *ngFor="let pE of pe" [value]="pE.intIdProgramaCampus">{{pE.strDsProgramaCampus}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Selecciona un periodo</mat-label>
+                        <mat-select formControlName="idPeriodo">
+                            <mat-option *ngFor="let periodo of periodos" [value]="periodo.strIdPeriodo">{{periodo.strDsPeriodoTemporada}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-card-content>
+                <mat-card-actions align="end">
+                    <button mat-raised-button color="primary">Buscar</button>
+                </mat-card-actions>
+            </form>
+        </mat-card>
+    </div>
+    <div class="table-list" *ngIf="dataSource && dataSource.data.length > 0">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="idAsesor">
+                <th mat-header-cell *matHeaderCellDef>Id Asesor</th>
+                <td mat-cell *matCellDef="let asesoresData">{{asesoresData.idAsesor}}</td>
+            </ng-container>
+            <ng-container matColumnDef="strNombre">
+                <th mat-header-cell *matHeaderCellDef>Nombre Completo</th>
+                <td mat-cell *matCellDef="let asesoresData">{{asesoresData.strNBTutor}}</td>
+            </ng-container>
+            <ng-container matColumnDef="areasApoyo">
+                <th mat-header-cell *matHeaderCellDef class="hidden-xs">Areas de Apoyo</th>
+                <td mat-cell *matCellDef="let asesoresData" class="hidden-xs">{{asesoresData.areasApoyo}}</td>
+            </ng-container>
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let asesoresData" >
+                    <button mat-raised-button color="primary" type="submit" matTooltip="Elegir como asesor"
+                        matTooltipPosition="left" style="margin-right: 10px;" (click)="asesorSeleccionado(asesoresData.idAsesor)">
+                        <mat-icon>check_box</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+    </div>
+    <div class="form" >
+        <mat-card>
+            <mat-card-content class="content">
+                <mat-form-field appearance="outline"  *ngIf="filterDias  && filterDias.length > 0" >
+                    <mat-label>Selecciona un dia</mat-label>
+                    <input matInput [matDatepicker]="picker" [matDatepickerFilter]="filterDias" [(ngModel)]="fechaSeleccionada" (dateChange)="seleccionDia($event.value)">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" *ngIf="horas && horas.length > 1">
+                    <mat-label>Selecciona un programa educativo</mat-label>
+                    <mat-select formControlName="idProgEducativo" (selectionChange)="seleccionHora($event.value)">
+                      <ng-container *ngFor="let hora of horas; let i = index">
+                        <mat-option *ngIf="i < horas.length - 1" [value]="hora + '-' + horas[i+1]">
+                          De: {{hora}} a {{horas[i + 1]}}
+                        </mat-option>
+                      </ng-container>
+                    </mat-select>
+                  </mat-form-field>                  
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="form" *ngIf="dataSaveAsesoria.horaInicio.length > 0  ">
+        <mat-card>
+            <mat-card-content class="content">
+                <label >Selecciona el tipo de asesoria</label>
+                <mat-radio-group [(ngModel)]="tipoAsesoria" (change)="seleccionTipoAsesoria($event)">
+                    <mat-radio-button value="Grupal" [disabled]="deshabilitarGrupal">Grupal</mat-radio-button>
+                    <mat-radio-button value="Individual">Individual</mat-radio-button>
+                </mat-radio-group>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="table-list" *ngIf="dataSaveAsesoria.horaInicio.length > 0">
+        <table mat-table [dataSource]="dataSourceTutorados" class="mat-elevation-z8">
+            <ng-container matColumnDef="strMatricula">
+                <th mat-header-cell *matHeaderCellDef>Matricula</th>
+                <td mat-cell *matCellDef="let tutoradosData">{{tutoradosData.strMatricula}}</td>
+            </ng-container>
+            <ng-container matColumnDef="strNombreCompleto">
+                <th mat-header-cell *matHeaderCellDef>Nombre Completo
+                <td mat-cell *matCellDef="let tutoradosData">{{tutoradosData.strNombreCompleto}}</td>
+            </ng-container>
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell  *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let tutoradosData">
+                    <button mat-raised-button  [color]="isRowDisabled(tutoradosData.strMatricula) ? 'primary' : 'accent'"
+                     type="submit" matTooltip="Elegir como asesor"  [disabled]="isDisable"
+                    matTooltipPosition="left" style="margin-right: 10px;" (click)="addTutoradoAsesoria(tutoradosData)">
+                    <mat-icon>{{isRowDisabled(tutoradosData.strMatricula) ? 'remove' : 'person_add' }}</mat-icon>
+                </button></td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayColumnsTutorados"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumnsTutorados"></tr>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+        </table>
+    </div>
+    <div class="form" align="end"  *ngIf="dataSaveAsesoria.alumnos.length > 0">
+        <mat-card-actions align="end">
+            <button mat-raised-button style="margin-right: 10px;" color="primary" type="submit" (click)="registrarAsesoria()">Enviar datos</button>
+        </mat-card-actions>
+    </div>
+</div>
+

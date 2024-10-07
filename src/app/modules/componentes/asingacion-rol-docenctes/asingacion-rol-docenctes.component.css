@@ -1,0 +1,45 @@
+.titulo {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-column-gap: 20px;
+}
+
+.mat-form-field {
+    width: 100%;
+    padding: 10px;
+}
+.list-main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form{
+    width: 80%;
+}
+.table{
+    width: 80%;
+}
+@media (max-width: 884px) {
+    .content{
+        grid-template-columns: 1fr;
+    }
+
+    .mat-form-field{
+        width: 100%;
+    }
+
+    .mat-card-actions{
+        justify-content: center;
+    }
+    
+    .list-main{
+        width: 100%;
+    }
+}

@@ -25,7 +25,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
@@ -63,6 +63,12 @@ import { HomeComponent } from './modules/componentes/home/home.component';
 import { AvisoDatosPersonalesDialogComponent } from './modules/componentes/modal-dialogs/aviso-datos-personales-dialog/aviso-datos-personales-dialog.component'; 
 import { VisorArchivoModalComponent } from './modules/componentes/modal-dialogs/visor-archivo-modal/visor-archivo-modal.component';
 import { AvisosComponent } from './modules/componentes/modal-dialogs/home/avisos/avisos.component';
+import { asignarRolDocente } from './modules/componentes/asingacion-rol-docenctes/asingacion-rol-docenctes.module';
+import { ListarDocentesModule } from './modules/componentes/listar-docentes/listar-docentes.module';
+import { RegistrarHorariosAsesorModule } from './modules/componentes/registrar-horarios-asesor/registrar-horarios-asesor.module';
+import { SolicitarAsesoriaModule } from './modules/componentes/solicitar-asesoria/solicitar-asesoria.module';
+import { AsignarAsesoriaModule } from './modules/componentes/asignar-asesoria/asignar-asesoria.module';
+import { FirmarInvitacionModule } from './modules/componentes/firmar-invitacion/firmar-invitacion.module';
 
 @NgModule({
   declarations: [
@@ -118,6 +124,12 @@ import { AvisosComponent } from './modules/componentes/modal-dialogs/home/avisos
     MatPaginatorModule,
     MatSliderModule,
     HammerModule,
+    asignarRolDocente,
+    ListarDocentesModule,
+    RegistrarHorariosAsesorModule,
+    SolicitarAsesoriaModule,
+    AsignarAsesoriaModule,
+    FirmarInvitacionModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -140,6 +152,7 @@ import { AvisosComponent } from './modules/componentes/modal-dialogs/home/avisos
       provide: LocationStrategy, 
       useClass: HashLocationStrategy
     },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-MX' }
   ],
   bootstrap: [AppComponent],
   schemas: [    

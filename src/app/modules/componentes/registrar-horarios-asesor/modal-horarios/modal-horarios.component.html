@@ -1,0 +1,32 @@
+<h2 class="title">Registrar horario</h2>
+<mat-dialog-content>
+    <p>Selecciona el dia y las horas de inicio y fin.</p>
+    <form [formGroup]="horarioDataForm" (ngSubmit)="registrarHorarioSubmit()">
+        <mat-card-content class="content">
+            <mat-form-field>
+                <mat-label>Selecciona un dia</mat-label>
+                <mat-select formControlName="dia">
+                    <mat-option *ngFor="let dia of listDias" [value]="dia">
+                        {{dia}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Selecciona la hora de inicio</mat-label>
+                <input matInput [ngxMatTimepicker]="pickerHI" formControlName="horaInicio">
+                <ngx-mat-timepicker #pickerHI></ngx-mat-timepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Selecciona la hora de Fin</mat-label>
+                <input matInput [ngxMatTimepicker]="pickerHF" formControlName="horaFin">
+                <ngx-mat-timepicker #pickerHF></ngx-mat-timepicker>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit" matTooltip="Iniciar sesion"
+                matTooltipPosition="above">
+                Registrar
+            </button>
+        </mat-card-actions>
+    </form>
+</mat-dialog-content>

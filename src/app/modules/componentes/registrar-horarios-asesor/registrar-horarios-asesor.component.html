@@ -1,0 +1,26 @@
+<div class="btn-add">
+    <button mat-raised-button color="primary" (click)="openDialog()">Nuevo Horario</button>
+    
+</div>
+<div class="div-Horario">
+    <div *ngFor="let horario of listHorarios">
+        <mat-card class="horario">
+            <mat-card-header>
+                <mat-card-title>Horario</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <hr>
+                <h1>Dia:{{horario.str_Dia}}</h1>
+            </mat-card-content>
+            <mat-card-content class="content">
+                <h2>Hora Inicio:<span>{{horario.time_Hora_Inicio}}</span></h2>
+                <h2>Hora Fin:<span>{{horario.time_Hora_Fin}}</span></h2>
+            </mat-card-content>
+            <mat-card-footer class="card-footer">
+                <button mat-raised-button color="primary" class="btn-opt" (click)="openDialogEditar(horario)">Editar</button>
+                <button mat-raised-button color="primary" class="btn-opt" (click)="eliminarHorario(horario)">Eliminar</button>
+            </mat-card-footer>
+        </mat-card>
+        <br>
+    </div>
+</div>

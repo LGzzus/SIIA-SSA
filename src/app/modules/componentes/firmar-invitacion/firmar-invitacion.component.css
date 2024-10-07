@@ -1,0 +1,8 @@
+.seccion{
+    display: flex;
+    justify-content: center;
+}
+.spacing{
+    margin: 15px 0;
+    gap: 50px;
+}
