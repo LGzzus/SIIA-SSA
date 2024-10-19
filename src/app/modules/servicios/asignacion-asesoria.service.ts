@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NotificationService } from './core/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppSettings } from 'src/app/settings.const';
-import { catchError, throwError } from 'rxjs';
+import { catchError, map, throwError } from 'rxjs';
+import { Asesoria } from '../componentes/lista-asesorias/lista-asesorias.component';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,23 @@ export class AsignacionAsesoriaService {
     .post(AppSettings.URL_LOCAL_REQUEST+'/asesoriasAsignacion/AsignarAsesoria',data)
     .pipe(
       catchError((error) => {
+        console.log(error);
+        return this.handleError(error);
+      })
+    )
+  }
+
+  getAsesorias(idAsesor: any, perido:any){
+    let params = new HttpParams()
+                     .set("idAsesor", idAsesor)
+                     .set("str_Id_Periodo", perido.toString());
+    console.log(params);
+    
+    return this.https
+    .post<{ message: string, asesorias: Asesoria[] }>(AppSettings.URL_LOCAL_REQUEST+'/asesoriasAsignacion/obtenerAsesorias',null,{params})
+    .pipe(
+      map(response => response.asesorias),
+      catchError((error) =>{
         console.log(error);
         return this.handleError(error);
       })

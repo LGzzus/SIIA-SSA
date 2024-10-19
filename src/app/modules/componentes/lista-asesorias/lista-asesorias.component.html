@@ -1,0 +1,53 @@
+<div class="titulo">
+    <h2>Lista de asesorias</h2>
+</div>
+<div class="main-Content">
+    <div class="table-list">
+        <table mat-table [dataSource]="dataSourceAsesorias" class="mat-elevation-z8">
+            <ng-container matColumnDef="strDia">
+                <th mat-header-cell *matHeaderCellDef>Dia</th>
+                <td mat-cell *matCellDef="let asesorias">{{asesorias.strDia}}</td>
+            </ng-container>
+            <ng-container matColumnDef="dateDiaAsesoria">
+                <th mat-header-cell *matHeaderCellDef>Fecha de la asesoria</th>
+                <td mat-cell *matCellDef="let asesorias">{{asesorias.dateDiaAsesoria}}</td>
+            </ng-container>
+            <ng-container matColumnDef="timeHoraIF">
+                <th mat-header-cell *matHeaderCellDef>Hora inicio - Hora Fin</th>
+                <td mat-cell *matCellDef="let asesorias">{{asesorias.timeHoraInicio}} - {{asesorias.tiemHoraFin}}</td>
+            </ng-container>
+            <ng-container matColumnDef="tipoAsesoria">
+                <th mat-header-cell *matHeaderCellDef>Tipo asesoria</th>
+                <td mat-cell *matCellDef="let asesorias">{{asesorias.tipoAsesoria}}</td>
+            </ng-container>
+            <ng-container matColumnDef="statusAtencion">
+                <th mat-header-cell *matHeaderCellDef>Estatus</th>
+                <td mat-cell *matCellDef="let asesorias">{{asesorias.statusAtencion}}</td>
+            </ng-container>
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let asesorias">
+                    <button mat-raised-button color="primary" type="submit" matTooltip="Asignar asesoria" 
+                        matTooltipPosition="left" style="margin-right: 10px;">
+                        <mat-icon>playlist_add_check</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+    </div>
+</div>
+<!--
+dateDiaAsesoria: "2024-10-15" e
+fechaActualizacion:null
+fechaCreacion: "2024-10-14"
+idAsesoria: 9
+int_Id_Programa: 2
+statusAtencion: false e
+strDia: "martes" e
+strIdPerido: "2010-4-3"
+tiemHoraFin: "15:00:00" e
+timeHoraInicio: "14:00:00" e
+tipoAsesoria:"Grupal"e -->

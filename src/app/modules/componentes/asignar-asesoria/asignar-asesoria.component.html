@@ -64,13 +64,11 @@
                 <mat-form-field appearance="outline" *ngIf="horas && horas.length > 1">
                     <mat-label>Selecciona un programa educativo</mat-label>
                     <mat-select formControlName="idProgEducativo" (selectionChange)="seleccionHora($event.value)">
-                      <ng-container *ngFor="let hora of horas; let i = index">
-                        <mat-option *ngIf="i < horas.length - 1" [value]="hora + '-' + horas[i+1]">
-                          De: {{hora}} a {{horas[i + 1]}}
+                        <mat-option *ngFor="let hora of horas"  [value]="hora.time_Hora_Inicio + '-' + hora.time_Hora_Fin">
+                          De:{{hora.time_Hora_Inicio}} a {{hora.time_Hora_Fin}}
                         </mat-option>
-                      </ng-container>
                     </mat-select>
-                  </mat-form-field>                  
+                </mat-form-field>                  
             </mat-card-content>
         </mat-card>
     </div>

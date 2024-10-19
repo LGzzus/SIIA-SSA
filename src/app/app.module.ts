@@ -69,6 +69,7 @@ import { RegistrarHorariosAsesorModule } from './modules/componentes/registrar-h
 import { SolicitarAsesoriaModule } from './modules/componentes/solicitar-asesoria/solicitar-asesoria.module';
 import { AsignarAsesoriaModule } from './modules/componentes/asignar-asesoria/asignar-asesoria.module';
 import { FirmarInvitacionModule } from './modules/componentes/firmar-invitacion/firmar-invitacion.module';
+import { ListaAsesoriasModule } from './modules/componentes/lista-asesorias/lista-asesorias.module';
 
 @NgModule({
   declarations: [
@@ -130,6 +131,7 @@ import { FirmarInvitacionModule } from './modules/componentes/firmar-invitacion/
     SolicitarAsesoriaModule,
     AsignarAsesoriaModule,
     FirmarInvitacionModule,
+    ListaAsesoriasModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
