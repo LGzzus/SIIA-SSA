@@ -13,6 +13,7 @@ import { AsignarAsesoriaComponent } from '../componentes/asignar-asesoria/asigna
 import { FirmarInvitacionModule } from '../componentes/firmar-invitacion/firmar-invitacion.module';
 import { FirmarInvitacionComponent } from '../componentes/firmar-invitacion/firmar-invitacion.component';
 import { ListaAsesoriasComponent } from '../componentes/lista-asesorias/lista-asesorias.component';
+import { ListaAsesoradosComponent } from '../componentes/lista-asesorados/lista-asesorados.component';
 
 const routes: Routes = [
   { path: "", redirectTo: 'login', pathMatch: "full"},
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: "solicitarAsesoria" , component: SolicitarAsesoriaComponent, pathMatch: "full"},
   { path: "asignarAsesoria" , component: AsignarAsesoriaComponent, pathMatch:"full"},
   { path: "firmarSolicitud", component: FirmarInvitacionComponent, pathMatch: "full"},
-  { path: "listarAsesorias", component: ListaAsesoriasComponent, pathMatch: "full"}
+  { path: "listarAsesorias", component: ListaAsesoriasComponent, pathMatch: "full"},
+  { path: "listaAsesorados", component: ListaAsesoradosComponent, pathMatch: "full"}
 ];
 
 @NgModule({
