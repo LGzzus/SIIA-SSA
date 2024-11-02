@@ -70,8 +70,8 @@ import { SolicitarAsesoriaModule } from './modules/componentes/solicitar-asesori
 import { AsignarAsesoriaModule } from './modules/componentes/asignar-asesoria/asignar-asesoria.module';
 import { FirmarInvitacionModule } from './modules/componentes/firmar-invitacion/firmar-invitacion.module';
 import { ListaAsesoriasModule } from './modules/componentes/lista-asesorias/lista-asesorias.module';
-import { ListaAsesoradosComponent } from './modules/componentes/lista-asesorados/lista-asesorados.component';
-import { ListaAsesoradosModule } from './modules/componentes/lista-asesorados/lista-asesorados.module';
+import { ListaAsistenciaComponent } from './modules/componentes/lista-asistencia/lista-asistencia.component';
+import { ListaAsistenciaModule } from './modules/componentes/lista-asistencia/lista-asistencia.module';
 
 @NgModule({
   declarations: [
@@ -134,7 +134,7 @@ import { ListaAsesoradosModule } from './modules/componentes/lista-asesorados/li
     AsignarAsesoriaModule,
     FirmarInvitacionModule,
     ListaAsesoriasModule,
-    ListaAsesoradosModule,
+    ListaAsistenciaModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -74,7 +74,8 @@ export class AsignarAsesoriaComponent {
   deshabilitarGrupal = false;
   disabledRows = new Set<string>(); 
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('paginatorAsesores') paginatorAsesores: MatPaginator;
+  @ViewChild('paginatorTutorados') paginatorTutorados: MatPaginator;
   
   dataFormulario = this._formBuilder.group({
     idProgEducativo: new FormControl('', [Validators.required]),
@@ -125,7 +126,7 @@ export class AsignarAsesoriaComponent {
         
         this.asesoresData = asesores;
         this.dataSource.data = this.asesoresData;
-        this.dataSource.paginator = this.paginator;
+        this.dataSource.paginator = this.paginatorAsesores;
       })
     }
     
@@ -200,7 +201,7 @@ export class AsignarAsesoriaComponent {
       this.dataSourceTutorados.data = this.tutoradosData;
     
       // Asigna el paginador
-      this.dataSourceTutorados.paginator = this.paginator;
+      this.dataSourceTutorados.paginator = this.paginatorTutorados;
     });
     
   }

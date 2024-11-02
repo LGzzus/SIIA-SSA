@@ -28,7 +28,7 @@
                 <th mat-header-cell *matHeaderCellDef>Acciones</th>
                 <td mat-cell *matCellDef="let asesorias">
                     <button mat-raised-button color="primary" type="submit" matTooltip="Asignar asesoria" 
-                        matTooltipPosition="left" style="margin-right: 10px;" [routerLink]="['/listaAsesorados']"
+                        matTooltipPosition="left" style="margin-right: 10px;" [routerLink]="['/listaAsistencia']"
                         [queryParams]="{idAsesoria: asesorias.idAsesoria}">
                         <mat-icon>playlist_add_check</mat-icon>
                     </button>
