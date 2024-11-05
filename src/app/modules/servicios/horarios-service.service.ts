@@ -65,6 +65,7 @@ export class HorarioService {
                      .set("int_Id_Asesor", idAsesor)
                      .set("str_Dia", diaSemana.toString())
                      .set("date_Fecha",fechaCorta.toString());
+    console.log(params)
     return this.https                 
     .post<{horas: Horas[]}>(AppSettings.URL_LOCAL_REQUEST+"/horario/horasDeAtencionDiaria",null,{params})
     .pipe(

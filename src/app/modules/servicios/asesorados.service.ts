@@ -1,42 +1,51 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NotificationService } from './core/notification.service';
 import { TranslateService } from '@ngx-translate/core';
+import { NotificationService } from './core/notification.service';
 import { AppSettings } from 'src/app/settings.const';
-import { catchError, map, throwError } from 'rxjs';
-import { Asesoria } from '../componentes/lista-asesorias/lista-asesorias.component';
+import { catchError, map, Subject, throwError, Observable, tap } from 'rxjs';
+import { Asesorados } from '../componentes/lista-asistencia/lista-asistencia.component';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AsignacionAsesoriaService {
+export class AsesoradosService {
 
+  private _refresh$ = new Subject<void>() 
   constructor(private https: HttpClient, protected _notificationService: NotificationService,
     private _translate: TranslateService) { }
 
-  postAsignacionAsesorias(data:any){
+  getListaAsistencias(idAsesoria: any) {
+    let params = new HttpParams()
+      .set("idAsesoria", idAsesoria);
+    console.log(params);
+
     return this.https
-    .post(AppSettings.URL_LOCAL_REQUEST+'/asesoriasAsignacion/AsignarAsesoria',data)
-    .pipe(
-      catchError((error) => {
-        console.log(error);
-        return this.handleError(error);
-      })
-    )
+      .post<{ message: string, alumnos: Asesorados[] }>(AppSettings.URL_LOCAL_REQUEST + '/asesoriasAsignacion/AlumnosAsesoria', null, { params })
+      .pipe(
+        map(response => response.alumnos),
+        catchError((error) => {
+          console.log(error);
+          return this.handleError(error);
+        })
+      )
   }
 
-  getAsesorias(idAsesor: any, perido:any){
+  get refresh$(){
+    return this._refresh$;
+  }
+
+  postAsistenciaAsesoria(idAsignacionAsesoria: any): Observable<Object>{
     let params = new HttpParams()
-                     .set("idAsesor", idAsesor)
-                     .set("str_Id_Periodo", perido.toString());
-    console.log(params);
-    
-    return this.https
-    .post<{ message: string, asesorias: Asesoria[] }>(AppSettings.URL_LOCAL_REQUEST+'/asesoriasAsignacion/obtenerAsesorias',null,{params})
+    .set("idAsignacion", idAsignacionAsesoria);
+    console.log(params)
+    return this.https.post(AppSettings.URL_LOCAL_REQUEST+'/asesoriasAsignacion/asistenciaAsesoria',null,{params})
     .pipe(
-      map(response => response.asesorias),
-      catchError((error) =>{
-        console.log(error);
+        tap(() =>{
+          this._refresh$.next();
+        }),
+      catchError((error)=>{
+        console.log(error)
         return this.handleError(error);
       })
     )

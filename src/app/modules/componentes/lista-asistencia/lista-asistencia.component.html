@@ -1,0 +1,37 @@
+<div class="titulo">
+    <h2>Lista de Asistencia de Asesorias</h2>
+</div>
+<div class="main-Content">
+    <div class="table-list">
+        <table mat-table [dataSource]="dataSourceAsesorados" class="mat-elevation-z8">
+            <ng-container matColumnDef="Nombre">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let asesorados">{{asesorados.str_Nombre_Alumno}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Matricula">
+                <th mat-header-cell *matHeaderCellDef>Matricula</th>
+                <td mat-cell *matCellDef="let asesorados">{{asesorados.str_Matricula_Alumno}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Asistencia">
+                <th mat-header-cell *matHeaderCellDef>Asistencia</th>
+                <td mat-cell *matCellDef="let asesorados">{{asesorados.str_Asistencia}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let asesorados">
+                    <button mat-raised-button color="primary" type="submit" matTooltip="Asignar asesoria" 
+                        matTooltipPosition="left" style="margin-right: 10px;" (click)="pasarAsistencia(asesorados.id_Asesoria_Asignacion)">
+                        <mat-icon>assignment_turned_in</mat-icon>
+                    </button>
+                    <button mat-raised-button color="primary" type="submit" matTooltip="Asignar asesoria" 
+                        matTooltipPosition="left" style="margin-right: 10px;">
+                        <mat-icon>report</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+    </div>
+</div>

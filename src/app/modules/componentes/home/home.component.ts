@@ -14,6 +14,8 @@ import { DocentesService } from '../../servicios/docentes.service';
 import { SolicitudesServicesService } from '../../servicios/solicitudes-services.service';
 import { NotificationService } from '../../servicios/core/notification.service';
 import { SharedServicesService } from '../../servicios/shared-services.service';
+import { EncuestasService } from '../../servicios/encuestas.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 @Component({
@@ -35,8 +37,10 @@ export class HomeComponent implements OnInit {
   cumpleAnios: boolean;
   permiteAyuda: boolean;
   avisos: any;
+  str_Matricula : any;
   dataAsesor: any;
   idSolicitud: any;
+  booleanPendientes: any;
   constructor(private tareasPendientesService: TareasPendientesService,
     private observer: BreakpointObserver,
     private servicioNavBar: ServicioNavBarService,
@@ -47,12 +51,16 @@ export class HomeComponent implements OnInit {
     protected _notificationService: NotificationService,
     private sharedService: SharedService,
     private sharedService2: SharedServicesService,
+    private encuestaService: EncuestasService,
+    private sanitizer: DomSanitizer,
     public dialog: MatDialog, public router: Router) {
     this.observer.observe(['(max-width: 800px)']).subscribe(result => {
       this.esDispositivoMovil = result.matches;
     });
   }
-
+  sanitizeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
   ngOnInit(): void {
     this.avisos = this.sharedService.getSharedAvisosData() != undefined ?
       this.sharedService.getSharedAvisosData() : { lstAvisosSiia: [] };
@@ -107,6 +115,20 @@ export class HomeComponent implements OnInit {
         this.showAvisos(this.dataAsesor.dataAsesor.intStatus)
       }
     })
+    this.str_Matricula = sessionStorage.getItem('strLoginUsuarioLog');
+    this.booleanPendientes = this.encuestaService.encuestasPendientes(this.str_Matricula).subscribe(response => {
+      console.log(response);
+      sessionStorage.setItem("listTareasPendientes",'[]');
+      let listaTareas = JSON.parse(sessionStorage.getItem("listTareasPendientes")|| '[]');
+
+      listaTareas.push("Tienes evaluaciones pendientes por responder <a href='youtube.com'>Ingresa aquíiiiiiii</a>")
+
+      sessionStorage.setItem("listTareasPendientes", JSON.stringify(listaTareas));
+    })
+    console.log(this.booleanPendientes);
+    if(this.booleanPendientes){
+      this.showMessages = true;
+    }
     /*this._solicitudesServices.postSolicitudesPendientes(asesorVO.lngIdPersona).subscribe(response => {
       this.idSolicitud = response;
       if (this.dataAsesor.mensaje !== undefined) {

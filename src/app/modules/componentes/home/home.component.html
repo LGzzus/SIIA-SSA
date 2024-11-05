@@ -15,16 +15,14 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="grid-block">
-                    <p>
-                        {{this.stripHtml(msg.mensaje)}}
+                    <p [innerHTML]="sanitizeHtml(msg)">
                     </p>
-                    <div class="btn-container">
+                    <!--div class="btn-container">
                         <button class="ingresar" mat-raised-button color="primary"
-                        type="button" matTooltip="Ingresar" matTooltipPosition="above" 
-                        (click)="openNewTab('https://siia.uatx.mx:8743/SIIA/')">
+                        type="button" matTooltip="Ingresar" matTooltipPosition="above" >
                         <mat-icon>input</mat-icon>
                     </button>    
-                    </div>                                                  
+                    </div-->                                                  
                 </div>
             </mat-expansion-panel>
             </mat-accordion>

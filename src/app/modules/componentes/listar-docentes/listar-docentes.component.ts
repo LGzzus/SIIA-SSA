@@ -70,6 +70,7 @@ export class ListarDocentesComponent {
     if (this.dataFormulario.valid){
       this._docentesService.postBuscarDocentes(dataForm).subscribe((asesores) => {
         this.asesoresData = asesores;
+        console.log(this.asesoresData)
         this.dataSource.data = this.asesoresData
         this.dataSource.paginator = this.paginator
       })

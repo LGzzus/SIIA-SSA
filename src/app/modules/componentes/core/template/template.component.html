@@ -100,7 +100,7 @@
 
         <mat-menu #serviciosEstudiantiles="matMenu">
             <button [class]="posSelectButton == 1 && selectedSubButton == 1? 'bindButton': ''" mat-menu-item
-                [routerLink]="['solicitarAsesoria']" *ngIf="tienePrivilegio('ServiciosEstudiantiles')">Solicitar
+                [routerLink]="['asignarAsesoria']" *ngIf="tienePrivilegio('ServiciosEstudiantiles')">Solicitar
                 Asesoria</button>
         </mat-menu>
     </ng-container>

@@ -49,7 +49,7 @@
             <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+        <mat-paginator #paginatorAsesores [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
     </div>
     <div class="form" >
         <mat-card>
@@ -64,13 +64,11 @@
                 <mat-form-field appearance="outline" *ngIf="horas && horas.length > 1">
                     <mat-label>Selecciona un programa educativo</mat-label>
                     <mat-select formControlName="idProgEducativo" (selectionChange)="seleccionHora($event.value)">
-                      <ng-container *ngFor="let hora of horas; let i = index">
-                        <mat-option *ngIf="i < horas.length - 1" [value]="hora + '-' + horas[i+1]">
-                          De: {{hora}} a {{horas[i + 1]}}
+                        <mat-option *ngFor="let hora of horas"  [value]="hora.time_Hora_Inicio + '-' + hora.time_Hora_Fin">
+                          De:{{hora.time_Hora_Inicio}} a {{hora.time_Hora_Fin}}
                         </mat-option>
-                      </ng-container>
                     </mat-select>
-                  </mat-form-field>                  
+                </mat-form-field>                  
             </mat-card-content>
         </mat-card>
     </div>
@@ -106,8 +104,8 @@
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayColumnsTutorados"></tr>
             <tr mat-row *matRowDef="let row; columns: displayColumnsTutorados"></tr>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
         </table>
+        <mat-paginator #paginatorTutorados [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
     </div>
     <div class="form" align="end"  *ngIf="dataSaveAsesoria.alumnos.length > 0">
         <mat-card-actions align="end">

@@ -74,7 +74,8 @@ export class AsignarAsesoriaComponent {
   deshabilitarGrupal = false;
   disabledRows = new Set<string>(); 
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('paginatorAsesores') paginatorAsesores: MatPaginator;
+  @ViewChild('paginatorTutorados') paginatorTutorados: MatPaginator;
   
   dataFormulario = this._formBuilder.group({
     idProgEducativo: new FormControl('', [Validators.required]),
@@ -125,7 +126,7 @@ export class AsignarAsesoriaComponent {
         
         this.asesoresData = asesores;
         this.dataSource.data = this.asesoresData;
-        this.dataSource.paginator = this.paginator;
+        this.dataSource.paginator = this.paginatorAsesores;
       })
     }
     
@@ -163,7 +164,7 @@ export class AsignarAsesoriaComponent {
     const diaEnEspañol = diaSeleccionado.toLocaleString('es-MX', optionsDay);
     
     this.dataSaveAsesoria.diaSeleccionado = diaEnEspañol;
-
+    
     const optionsDate: Intl.DateTimeFormatOptions = {
       year: 'numeric',   // Asegúrate de que estos sean strings
       month: '2-digit',
@@ -176,11 +177,18 @@ export class AsignarAsesoriaComponent {
 
     this._horarioService.getHorasPorDia(this.idAsesor, diaEnEspañol,fechaCorta).subscribe((horas)=>{
       this.horas = horas;
+      console.log(this.horas);
+      console.log(this.horas.length);
+      if(this.horas.length <= 0){
+        this._notificactionService.pushAlert("No existen horarios disponibles, selecciona otro dia");
+      }
     })
+    console.log(this.dataSaveAsesoria);
   }
   seleccionHora(horaSeleccionada:any){
     horaSeleccionada = horaSeleccionada.toString().split('-')
-
+    console.log(horaSeleccionada);
+    
     this.dataSaveAsesoria.horaInicio = horaSeleccionada[0];
     this.dataSaveAsesoria.horaFin = horaSeleccionada[1];    
     this._combosServices.postObtenerTutorados(this.dataFormHL).subscribe((tutorados) => {
@@ -193,7 +201,7 @@ export class AsignarAsesoriaComponent {
       this.dataSourceTutorados.data = this.tutoradosData;
     
       // Asigna el paginador
-      this.dataSourceTutorados.paginator = this.paginator;
+      this.dataSourceTutorados.paginator = this.paginatorTutorados;
     });
     
   }
