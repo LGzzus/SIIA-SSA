@@ -102,6 +102,8 @@
             <button [class]="posSelectButton == 1 && selectedSubButton == 1? 'bindButton': ''" mat-menu-item
                 [routerLink]="['asignarAsesoria']" *ngIf="tienePrivilegio('ServiciosEstudiantiles')">Solicitar
                 Asesoria</button>
+            <button [class]="posSelectButton == 1 && selectedSubButton == 1? 'bindButton': ''" mat-menu-item
+            [routerLink]="['encuestas']" *ngIf="tienePrivilegio('ServiciosEstudiantiles')">Evaluacion Asesorias</button>
         </mat-menu>
     </ng-container>
 

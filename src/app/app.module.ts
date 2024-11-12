@@ -72,6 +72,7 @@ import { FirmarInvitacionModule } from './modules/componentes/firmar-invitacion/
 import { ListaAsesoriasModule } from './modules/componentes/lista-asesorias/lista-asesorias.module';
 import { ListaAsistenciaComponent } from './modules/componentes/lista-asistencia/lista-asistencia.component';
 import { ListaAsistenciaModule } from './modules/componentes/lista-asistencia/lista-asistencia.module';
+import { EncuestasModule } from './modules/componentes/encuestas/encuestas.module';
 
 @NgModule({
   declarations: [
@@ -135,6 +136,7 @@ import { ListaAsistenciaModule } from './modules/componentes/lista-asistencia/li
     FirmarInvitacionModule,
     ListaAsesoriasModule,
     ListaAsistenciaModule,
+    EncuestasModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

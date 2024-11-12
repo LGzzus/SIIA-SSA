@@ -1,0 +1,59 @@
+<div class="titulo">
+    <h2>Lista de Evaluaciones Asesorias</h2>
+</div>
+<div class="main-Content">
+    <div class="form">
+        <mat-card>
+            <form  [formGroup]="dataFormulario" (ngSubmit)="getEncuestas()">
+                <mat-card-content class="content">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Selecciona un programa educativo</mat-label>
+                        <mat-select formControlName="idProgEducativo">
+                            <mat-option *ngFor="let pE of pe" [value]="pE.intIdProgramaCampus">{{pE.strDsProgramaCampus}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Selecciona un periodo</mat-label>
+                        <mat-select formControlName="idPeriodo">
+                            <mat-option *ngFor="let periodo of periodos" [value]="periodo.strIdPeriodo">{{periodo.strDsPeriodoTemporada}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-card-content>
+                <mat-card-actions align="end">
+                    <button mat-raised-button color="primary">Buscar</button>
+                </mat-card-actions>
+            </form>
+        </mat-card>
+    </div>
+    <div class="table-list">
+        <table mat-table [dataSource]="dataSourceEncuestas" class="mat-elevation-z8" >
+            <ng-container matColumnDef="idEvaluacion">
+                <th mat-header-cell *matHeaderCellDef>Id Evaluacion</th>
+                <th mat-cell *matCellDef="let encuestaData">{{encuestaData.id_Encuesta}}</th>
+            </ng-container>
+            <ng-container matColumnDef="fechaAsesoria">
+                <th mat-header-cell *matHeaderCellDef>Fecha Asesoria</th>
+                <th mat-cell *matCellDef="let encuestaData">{{encuestaData.date_Fecha_Asesoria }}</th>
+            </ng-container>
+            <ng-container matColumnDef="asesor">
+                <th mat-header-cell *matHeaderCellDef>Asesor</th>
+                <th mat-cell *matCellDef="let encuestaData">{{encuestaData.str_NB_Asesor}}</th>
+            </ng-container>
+            <ng-container matColumnDef="fechaApertura">
+                <th mat-header-cell *matHeaderCellDef>Fecha Apertura</th>
+                <th mat-cell *matCellDef="let encuestaData" >{{encuestaData.date_Fecha_Asignacion | date: 'dd/MM/yyyy HH:mm'}}</th>
+            </ng-container>
+            <ng-container matColumnDef="responderEncuesta">
+                <th mat-header-cell *matHeaderCellDef>Responder Evaluacion</th>
+                <th mat-cell *matCellDef="let encuestaData" >
+                    <button mat-raised-button color="primary" type="submit" matTooltip="Listar asesorias"
+                    matTooltipPosition="left">
+                    <mat-icon>sms</mat-icon>
+                    </button>
+                </th>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+    </div>
+</div>
