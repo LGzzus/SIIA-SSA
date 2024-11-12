@@ -4,7 +4,8 @@ import { NotificationService } from './core/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppComponent } from 'src/app/app.component';
 import { AppSettings } from 'src/app/settings.const';
-import { catchError, throwError } from 'rxjs';
+import { catchError, map, throwError } from 'rxjs';
+import { Encuesta } from '../componentes/encuestas/encuestas.component';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,23 @@ export class EncuestasService {
         return this.handleError(error);
         })
       );
+    }
+
+    listaEncuestas(data: any){
+      let params = new HttpParams()
+      .set("idProgramaEducativo",data.intIdPrograma)
+      .set("str_Periodo",data.strIdPeriodo)
+      .set("str_Matricula",data.strMatricula);
+
+      return this.https
+      .post<Encuesta[]>(AppSettings.URL_LOCAL_REQUEST + '/asesoriaEncuastas/listaEncuestas', null,{params})
+      .pipe(
+        map(response => response),
+        catchError((error) => {
+          console.log(error);
+          return this.handleError(error);
+        })
+      )
     }
 
     protected handleError(error: HttpErrorResponse) {
