@@ -47,7 +47,8 @@
                 <th mat-header-cell *matHeaderCellDef>Responder Evaluacion</th>
                 <th mat-cell *matCellDef="let encuestaData" >
                     <button mat-raised-button color="primary" type="submit" matTooltip="Listar asesorias"
-                    matTooltipPosition="left">
+                    matTooltipPosition="left" [routerLink]="['/preguntas']"
+                    [queryParams]="{idEncuesta: encuestaData.id_Encuesta}">
                     <mat-icon>sms</mat-icon>
                     </button>
                 </th>

@@ -47,6 +47,29 @@ export class EncuestasService {
       )
     }
 
+    preguntasConRespuestasEncuestas(data: any){
+      let params = new HttpParams()
+      .set("idEncuesta", data.idEncuesta);
+
+      return this.https
+      .get(AppSettings.URL_LOCAL_REQUEST+'/asesoriaEncuastas/obtenerPreguntas',{params})
+      .pipe(
+        catchError((error) => {
+          console.log(error)
+          return this.handleError(error);
+        })
+        )
+    }
+    registrarRespuesta(body:any){
+      return this.https
+      .post(AppSettings.URL_LOCAL_REQUEST + '/asesoriaEncuastas/registrarRespuesta',body)
+      .pipe(
+        catchError((error) => {
+          console.log(error)
+          return this.handleError(error);
+        })
+      )
+    }
     protected handleError(error: HttpErrorResponse) {
       if (error.error instanceof ErrorEvent) {
         this._notificationService.pushError(this._translate.instant('template.notificaciones.error.comunicacion'));
