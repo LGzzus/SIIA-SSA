@@ -15,6 +15,7 @@ import { ListaAsesoriasComponent } from '../componentes/lista-asesorias/lista-as
 import { ListaAsistenciaComponent } from '../componentes/lista-asistencia/lista-asistencia.component';
 import { EncuestasComponent } from '../componentes/encuestas/encuestas.component';
 import { PreguntasComponent } from '../componentes/preguntas/preguntas.component';
+import { ObservacionesReportesComponent } from '../componentes/observaciones-reportes/observaciones-reportes.component';
 
 const routes: Routes = [
   { path: "", redirectTo: 'login', pathMatch: "full"},
@@ -29,7 +30,8 @@ const routes: Routes = [
   { path: "listarAsesorias", component: ListaAsesoriasComponent, pathMatch: "full"},
   { path: "listaAsistencia", component: ListaAsistenciaComponent, pathMatch: "full"},
   { path: "encuestas", component: EncuestasComponent, pathMatch: "full"},
-  { path: "preguntas", component: PreguntasComponent, pathMatch: "full"}
+  { path: "preguntas", component: PreguntasComponent, pathMatch: "full"},
+  { path: "observacionesReportes", component: ObservacionesReportesComponent, pathMatch: "full"}
 ];
 
 @NgModule({

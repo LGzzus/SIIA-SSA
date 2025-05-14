@@ -23,8 +23,8 @@
                         matTooltipPosition="left" style="margin-right: 10px;" (click)="pasarAsistencia(asesorados.id_Asesoria_Asignacion)">
                         <mat-icon>assignment_turned_in</mat-icon>
                     </button>
-                    <button mat-raised-button color="primary" type="submit" matTooltip="Asignar asesoria" 
-                        matTooltipPosition="left" style="margin-right: 10px;">
+                    <button mat-raised-button color="primary" type="button" matTooltip="Asignar asesoria" 
+                        matTooltipPosition="left" style="margin-right: 10px;" [routerLink]="['/observacionesReportes']" [queryParams]="{matricula: asesorados.str_Matricula_Alumno, strNombreAlumno: asesorados.str_Nombre_Alumno}">
                         <mat-icon>report</mat-icon>
                     </button>
                 </td>

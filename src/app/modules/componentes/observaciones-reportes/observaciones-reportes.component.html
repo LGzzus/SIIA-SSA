@@ -1,0 +1,42 @@
+<div class="titulo">
+    <h2>Observaciones y reportes</h2>
+</div>
+<div class="main-Content">
+    <div class="form">
+        <div class="spaceBettwen">
+            <p>Nombre del Alumno: {{nombre}}</p>
+            <p>Matricula: {{matricula}}</p>
+        </div>
+    </div>
+</div>
+<div class="main-Content">
+    <div class="form">
+        <mat-card>
+            <form [formGroup]="datosTicket">
+                <mat-card-content class="content">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Selecciona una --</mat-label>
+                        <mat-select formControlName="tipoTicket">
+                            <mat-option [value]="'Observación'">Observacion</mat-option>
+                            <mat-option [value]="'Reporte'">Reporte</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!--<mat-form-field appearance="outline">
+                        <mat-label>Ingresa tu Observacion u Reporte</mat-label>
+                        <textarea></textarea>
+                    </mat-form-field-->
+                </mat-card-content>
+                <mat-card-content class="content100">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ingresa tu Observacion u Reporte</mat-label>
+                        <textarea matInput formControlName="contenidoTicket"></textarea>
+                    </mat-form-field>
+                </mat-card-content>
+                <button mat-raised-button color="primary" type="button" matTooltip="Asignar asesoria" 
+                        matTooltipPosition="left" style="margin-right: 10px;" (click)="registrarTicket(matricula)">
+                        <mat-icon>report</mat-icon>
+                </button>
+            </form>
+        </mat-card>
+    </div>
+</div>

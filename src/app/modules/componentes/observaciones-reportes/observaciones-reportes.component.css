@@ -1,0 +1,28 @@
+.titulo {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.main-Content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form {
+    width: 80%;
+}
+.content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+}
+.content100{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+
+}
+.spaceBettwen{
+    display: flex;
+    justify-content: space-between;
+}

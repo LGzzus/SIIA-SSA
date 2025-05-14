@@ -75,6 +75,8 @@ import { ListaAsistenciaModule } from './modules/componentes/lista-asistencia/li
 import { EncuestasModule } from './modules/componentes/encuestas/encuestas.module';
 import { PreguntasComponent } from './modules/componentes/preguntas/preguntas.component';
 import { PreguntasModule } from './modules/componentes/preguntas/preguntas.module';
+import { ObservacionesReportesComponent } from './modules/componentes/observaciones-reportes/observaciones-reportes.component';
+import { ObservacionesReportesModule } from './modules/componentes/observaciones-reportes/observaciones-reportes.module';
 
 @NgModule({
   declarations: [
@@ -140,6 +142,7 @@ import { PreguntasModule } from './modules/componentes/preguntas/preguntas.modul
     ListaAsistenciaModule,
     EncuestasModule,
     PreguntasModule,
+    ObservacionesReportesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
